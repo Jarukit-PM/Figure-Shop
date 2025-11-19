@@ -4,10 +4,11 @@ require('dotenv').config()
 const env = process.env;
 
 const pool = mysql.createPool({
-    host: env.BACKEND_SERVICE,
-    user: env.MYSQL_USER,
-    // password: env.MYSQL_PASSWORD,
-    database: env.MYSQL_DATABASE,
+    host: env.DB_HOST || env.BACKEND_SERVICE || 'localhost',
+    port: Number(env.DB_PORT || env.BACKEND_PORT || 3306),
+    user: env.MYSQL_USER || 'root',
+    password: env.MYSQL_PASSWORD || undefined,
+    database: env.MYSQL_DATABASE || 'test_nodejs',
     waitForConnections: true,
     connectionLimit: 10,
     queueLimit: 0

@@ -56,6 +56,11 @@ Add the following variables to `.env`:
 ```
 MONGOURI=mongodb+srv://<user>:<password>@<cluster>/<db>?retryWrites=true&w=majority
 PORT=8080
+DB_HOST=localhost        # or the hostname/IP of your MySQL/MariaDB server
+DB_PORT=3306
+MYSQL_USER=root
+MYSQL_PASSWORD=
+MYSQL_DATABASE=test_nodejs
 ```
 
 Start the API:
@@ -77,6 +82,21 @@ npm start
 
 Open http://localhost:9090 to browse the storefront and admin panel.
 The frontend expects the backend to run on http://localhost:8080; update the Axios base URLs in `Frontend/app.js` if you use a different port or host.
+
+### 4. Run Everything with Docker Compose
+To avoid installing Node.js, MySQL, and Mongo locally, you can spin up the full stack with Docker:
+```bash
+docker compose up --build
+```
+- `my-shop-db` builds from `Backend/Mariadb/Dockerfile` and seeds the schema defined in `Backend/Mariadb/Schema.sql`.
+- `my-shop-backend` gets its DB connection details from environment variables provided in `compose.yaml`. Update them if you need custom credentials.
+- `my-shop-frontend` automatically points to the backend service via the Docker network.
+
+After the containers finish starting, visit http://localhost:9090. To stop all services, press `Ctrl+C` in the compose terminal or run:
+```bash
+docker compose down
+```
+Add `-v` if you want to remove the database volume.
 
 ## Key API Endpoints
 | Area | Endpoint | Description |

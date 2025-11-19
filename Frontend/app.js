@@ -15,7 +15,9 @@ app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
 const PORT = env.PORT || 9090;
-const BACKEND_SERVICE = `http://${env.BACKEND_SERVICE}:${env.BACKEND_PORT}`;
+const BACKEND_HOST = env.BACKEND_SERVICE || 'localhost';
+const BACKEND_PORT = env.BACKEND_PORT || 8080;
+const BACKEND_SERVICE = env.BACKEND_BASE_URL || `http://${BACKEND_HOST}:${BACKEND_PORT}`;
 
 // console.log("Backend service", BACKEND_SERVICE);
 
